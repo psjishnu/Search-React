@@ -3,10 +3,7 @@ import LandingPage from "./Components/LandingPage";
 
 function App() {
   return (
-    <div
-      style={{ backgroundColor: "#f50057" }}
-      className="flex h-screen items-center justify-center"
-    >
+    <div style={{ backgroundColor: "#f50057" }} className="flex h-screen">
       <LandingPage />
     </div>
   );
