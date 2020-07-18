@@ -12,7 +12,7 @@ const LandingPage = () => {
   const [value, setValue] = useState("");
   const [inputValue, setInputValue] = useState("");
   const [Loading, setLoading] = useState({ load: false, search: false });
-  const [opt, setopt] = useState("confirmed");
+  const [opt, setopt] = useState("select");
   const [Color, setColor] = useState({
     name: "white",
     msg: "",
@@ -22,6 +22,11 @@ const LandingPage = () => {
     dispatch(getConfirmed()).then((res) => {
       if (res !== undefined) {
         setLocations(res.data.locations);
+        const answer = res.data.locations;
+        const finalres = answer.filter(
+          (Locations) => Locations.country === value.country
+        );
+        setResult(finalres[0]);
       }
       setLoading({ load: false, search: false });
     });
@@ -31,6 +36,11 @@ const LandingPage = () => {
     dispatch(getDeaths()).then((res) => {
       if (res !== undefined) {
         setLocations(res.data.locations);
+        const answer = res.data.locations;
+        const finalres = answer.filter(
+          (Locations) => Locations.country === value.country
+        );
+        setResult(finalres[0]);
       }
       setLoading({ load: false, search: false });
     });
@@ -40,6 +50,11 @@ const LandingPage = () => {
     dispatch(getRecovered()).then((res) => {
       if (res !== undefined) {
         setLocations(res.data.locations);
+        const answer = res.data.locations;
+        const finalres = answer.filter(
+          (Locations) => Locations.country === value.country
+        );
+        setResult(finalres[0]);
       }
       setLoading({ load: false, search: false });
     });
@@ -52,7 +67,7 @@ const LandingPage = () => {
 
   const handleSubmit = () => {
     setLoading({ load: false, search: true });
-    if (value.country !== undefined) {
+    if (value !== null && value.country !== undefined && opt !== "select") {
       switch (opt) {
         case "deaths":
           Deaths();
@@ -80,17 +95,13 @@ const LandingPage = () => {
       }
     } else {
       setLoading(false);
-      alert("No Input");
-    }
-    if (Locations.length !== undefined) {
-      const res = Locations.filter(
-        (Locations) => Locations.country === value.country
-      );
-      setResult(res[0]);
+      if (opt === "select") {
+        alert("No option selected");
+      } else {
+        alert("No Input");
+      }
     }
   };
-
-  console.log(Loading);
 
   return (
     <div className="m-0 m-auto">
@@ -160,6 +171,12 @@ const LandingPage = () => {
                       setopt(e.target.value);
                     }}
                   >
+                    <option
+                      className=" text-transparent hidden opacity-50"
+                      value={"select"}
+                    >
+                      {opt}
+                    </option>
                     <option className="text-black" value={"confirmed"}>
                       Confirmed
                     </option>
