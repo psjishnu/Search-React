@@ -11,7 +11,7 @@ const LandingPage = () => {
   const [Result, setResult] = useState("");
   const [value, setValue] = useState("");
   const [inputValue, setInputValue] = useState("");
-  const [Loading, setLoading] = useState(false);
+  const [Loading, setLoading] = useState({ load: false, search: false });
   const [opt, setopt] = useState("confirmed");
   const [Color, setColor] = useState({
     name: "white",
@@ -23,7 +23,7 @@ const LandingPage = () => {
       if (res !== undefined) {
         setLocations(res.data.locations);
       }
-      setLoading(false);
+      setLoading({ load: false, search: false });
     });
   };
 
@@ -32,7 +32,7 @@ const LandingPage = () => {
       if (res !== undefined) {
         setLocations(res.data.locations);
       }
-      setLoading(false);
+      setLoading({ load: false, search: false });
     });
   };
 
@@ -41,17 +41,17 @@ const LandingPage = () => {
       if (res !== undefined) {
         setLocations(res.data.locations);
       }
-      setLoading(false);
+      setLoading({ load: false, search: false });
     });
   };
 
   useEffect(() => {
-    setLoading(true);
+    setLoading({ load: true, search: false });
     Confirmed();
   }, []);
 
   const handleSubmit = () => {
-    setLoading(true);
+    setLoading({ load: false, search: true });
     if (value.country !== undefined) {
       switch (opt) {
         case "deaths":
@@ -89,18 +89,26 @@ const LandingPage = () => {
       setResult(res[0]);
     }
   };
+
+  console.log(Loading);
+
   return (
     <div className="m-0 m-auto">
       <div style={{ backgroundColor: "#f50057" }} className="m-0 w-full m-auto">
-        {Loading && (
+        {(Loading.load || Loading.search) && (
           <div className="m-0 m-auto">
             <div className="mt-20 text-center m-0 m-auto">
               <Loader />
-              <p className="text-4xl font-bold text-white">Loading....</p>
+              <p className="text-4xl font-bold text-white">
+                {Loading.load && <>Loading....</>}
+              </p>
+              <p className="text-4xl font-bold text-white">
+                {Loading.search && <>Searching....</>}
+              </p>
             </div>
           </div>
         )}
-        {!Loading && Locations.length !== undefined && (
+        {!Loading.load && Locations.length !== undefined && (
           <div className="w-screen">
             <div className="m-0 m-auto text-center text-white text-2xl md:text-3xl lg:text-4xl font-bold">
               CORONA SEARCHER
@@ -176,7 +184,7 @@ const LandingPage = () => {
             </div>
           </div>
         )}
-        {!Loading && Locations.length === undefined && (
+        {!Loading.load && Locations.length === undefined && (
           <>
             <div className="text-white text-4xl">OOPS..!! API FAILED</div>
           </>
