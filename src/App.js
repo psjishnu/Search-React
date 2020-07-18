@@ -1,10 +1,15 @@
 import React from "react";
 import LandingPage from "./Components/LandingPage";
-
+import "./Footer.css";
 function App() {
   return (
-    <div style={{ backgroundColor: "#f50057" }} className="flex h-screen">
-      <LandingPage />
+    <div>
+      <div
+        style={{ backgroundColor: "#f50057" }}
+        className="m-0 m-auto h-screen"
+      >
+        <LandingPage />
+      </div>
     </div>
   );
 }

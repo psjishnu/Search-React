@@ -94,10 +94,10 @@ const LandingPage = () => {
 
   return (
     <div className="m-0 m-auto">
-      <div style={{ backgroundColor: "#f50057" }} className="m-0 w-full m-auto">
+      <div style={{ backgroundColor: "#f50057" }} className="m-0 m-auto">
         {(Loading.load || Loading.search) && (
-          <div className="m-0 m-auto">
-            <div className="mt-20 text-center m-0 m-auto">
+          <div className="m-0 justify-center pt-20 m-auto">
+            <div className="text-center pt-20 m-0 m-auto">
               <Loader />
               <p className="text-4xl font-bold text-white">
                 {Loading.load && <>Loading....</>}
@@ -108,9 +108,9 @@ const LandingPage = () => {
             </div>
           </div>
         )}
-        {!Loading.load && Locations.length !== undefined && (
+        {!Loading.load && !Loading.search && Locations.length !== undefined && (
           <div className="w-screen">
-            <div className="m-0 m-auto text-center text-white text-2xl md:text-3xl lg:text-4xl font-bold">
+            <div className="m-0 pt-8 m-auto text-center text-white text-2xl md:text-3xl lg:text-4xl font-bold">
               CORONA SEARCHER
             </div>
             <div
@@ -184,10 +184,10 @@ const LandingPage = () => {
             </div>
           </div>
         )}
-        {!Loading.load && Locations.length === undefined && (
-          <>
-            <div className="text-white text-4xl">OOPS..!! API FAILED</div>
-          </>
+        {!Loading.load && !Loading.search && Locations.length === undefined && (
+          <div className="w-full px-1 py-20 text-center">
+            <div className="text-white py-20 text-4xl">OOPS..!! API FAILED</div>
+          </div>
         )}
       </div>
     </div>
