@@ -18,15 +18,35 @@ const LandingPage = () => {
     msg: "",
   });
 
+  const ResultSet = (res) => {
+    var Countryarr = [];
+    const answer = res.data.locations;
+
+    for (var i = 0; i < answer.length; i++) {
+      Countryarr = Countryarr.concat(answer[i].country);
+    }
+    let x = [...new Set(Countryarr)];
+    Countryarr = [];
+    for (i = 0; i < x.length; i++) {
+      Countryarr = Countryarr.concat({ country: x[i] });
+    }
+    setLocations(Countryarr);
+
+    const finalres = answer.filter(
+      (Locations) => Locations.country === value.country
+    );
+
+    var result = 0;
+    for (i = 0; i < finalres.length; i++) {
+      result = result + finalres[i].latest;
+    }
+    setResult(result);
+  };
+
   const Confirmed = () => {
     dispatch(getConfirmed()).then((res) => {
       if (res !== undefined) {
-        setLocations(res.data.locations);
-        const answer = res.data.locations;
-        const finalres = answer.filter(
-          (Locations) => Locations.country === value.country
-        );
-        setResult(finalres[0]);
+        ResultSet(res);
       }
       setLoading({ load: false, search: false });
     });
@@ -35,12 +55,7 @@ const LandingPage = () => {
   const Deaths = () => {
     dispatch(getDeaths()).then((res) => {
       if (res !== undefined) {
-        setLocations(res.data.locations);
-        const answer = res.data.locations;
-        const finalres = answer.filter(
-          (Locations) => Locations.country === value.country
-        );
-        setResult(finalres[0]);
+        ResultSet(res);
       }
       setLoading({ load: false, search: false });
     });
@@ -49,12 +64,7 @@ const LandingPage = () => {
   const Recovered = () => {
     dispatch(getRecovered()).then((res) => {
       if (res !== undefined) {
-        setLocations(res.data.locations);
-        const answer = res.data.locations;
-        const finalres = answer.filter(
-          (Locations) => Locations.country === value.country
-        );
-        setResult(finalres[0]);
+        ResultSet(res);
       }
       setLoading({ load: false, search: false });
     });
@@ -136,7 +146,7 @@ const LandingPage = () => {
                 <div
                   className={`m-0  m-auto text-center px-0 items-center mt-10 text-${Color.name}  text-md lg:2xl md:text-2xl font-semibold`}
                 >
-                  {Color.msg} : {Result.latest}
+                  {Color.msg} : {Result}
                 </div>
               )}
               {(Result === undefined || Result === "") && (
