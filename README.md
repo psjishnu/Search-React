@@ -1,3 +1,8 @@
+# A React app for searching COVID-19 data based on country name . 
+
+### Android app available at [Download Android app](https://github.com/psjishnu/photovault/blob/master/Covid-search.apk?raw=true)
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
